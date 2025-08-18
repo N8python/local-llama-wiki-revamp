@@ -148,9 +148,10 @@ A wide variety of community resources are available to run local LLMs:
 
 ### Models
 
-[Hugging Face](https://huggingface.co/) is where you can find and download Llama models and other LLMs. Search by specific model name or by appellation like GPTQ, GGUF, EXL2, or AWQ. GGML is deprecated. For more in-depth information on models and model loaders, [**read this wiki entry**](https://github.com/oobabooga/text-generation-webui/wiki/04-%E2%80%90-Model-Tab#model-loaders).
+[Hugging Face](https://huggingface.co/) is where you can find and download LLMs. Search by specific model name or quant format, such as GPTQ, GGUF, EXL2, or AWQ. MLX-specific quants can be found in the [mlx-community](https://huggingface.co/mlx-community) org.
 
-GGUF is the most widely used. In general quality and filesize, from worst to best and smallest to largest, respectively, follows this ascending order: Q2K, Q3_K_S, Q3_K_M, Q3_K_L, Q4_0, Q4_K_S, Q4_K_M, Q5_0, Q5_K_S, Q5_K_M, Q6_K, Q8_0, F16. You do not need all of these, only one.
+
+GGUF is the most widely used. In general quality and filesize, from worst to best and smallest to largest, respectively, follows this ascending order: Q2K, Q3_K_S, Q3_K_M, Q3_K_L, Q4_0, Q4_K_S, Q4_K_M, Q5_0, Q5_K_S, Q5_K_M, Q6_K, Q8_0, F16. You do not need all of these, only one. Note that some files may have an "I" prefix - this means the model was finetuned using an importance matrix, which generally improves performance - prefer these for lower quants.
 
 For keeping track of new models, most popular ones are posted in this subreddit. You can search by the [New Model flair](https://www.reddit.com/r/LocalLLaMA/search/?sort=new&restrict_sr=on&q=flair%3A%22New%20%20Model%22) to find these posts.
 
@@ -160,11 +161,13 @@ With the resources available, quantization is generally an easy process that can
 
 [**GPTQ**](https://huggingface.co/docs/transformers/main/main_classes/quantization)
 
-[**GGUF**](https://github.com/ggerganov/llama.cpp#prepare-data--run)
+[**GGUF**](https://github.com/ggml-org/llama.cpp/blob/3007baf201e7ffcda17dbdb0335997fa50a6595b/tools/quantize/README.md#L4)
 
 [**EXL2**](https://github.com/turboderp/exllamav2#exl2-quantization)
 
 [**AWQ**](https://github.com/casper-hansen/AutoAWQ#examples)
+
+
 
 #### What's the best model for...?
 
@@ -172,160 +175,44 @@ The answer to this question can vary depending on personal preference, but here 
 
 **Chatting like ChatGPT**
 
-The official Llama 2 Chat models by Meta can be considered some of the best for assistant chatting like ChatGPT.
+The Gemma 3 series of models from Google are known for being enjoyable to chat with.
 
-|7B|[Llama 2 7B Chat](https://huggingface.co/NousResearch/Llama-2-7b-chat-hf)|
+|4B|[Gemma 3 4B Instruct](https://huggingface.co/google/gemma-3-4b-it)|
 |:-:|:-:|
-|13B|[Llama 2 13B Chat](https://huggingface.co/NousResearch/Llama-2-13b-chat-hf)|
-|70B|[Llama 2 70B Chat](https://huggingface.co/NousResearch/Llama-2-70b-chat-hf)|
+|12B|[Gemma 3 12B Instruct](https://huggingface.co/google/gemma-3-12b-it)|
+|27B|[Gemma 3 27B Instruct](https://huggingface.co/google/gemma-3-27b-it)|
+
+All Gemma models are additionally multimodal - they accept image and text input.
 
 **Coding**
 
-[*See Code Llama blog for more details*](https://ai.meta.com/blog/code-llama-large-language-model-coding/)
+The Qwen-Coder & GLM-4.5 model series are the best open-source coding models as of August 2025.
 
-|7B|[Code Llama 7B Instruct](https://huggingface.co/codellama/CodeLlama-7b-Instruct-hf)|
+|30B-A3B|[Qwen3 Coder 30B A3B Instruct](https://huggingface.co/Qwen/Qwen3-Coder-30B-A3B-Instruct)|
 |:-:|:-:|
-|13B|[Code Llama 13B Instruct](https://huggingface.co/codellama/CodeLlama-13b-Instruct-hf)|
-|34B|[Phind Code Llama 34B v2](https://huggingface.co/phind/Phind-CodeLlama-34B-v2)|
+|106B-A16B|[GLM 4.5 Air](https://huggingface.co/zai-org/GLM-4.5-Air)|
+|480B-A35B|[Qwen3 Coder 480B A35B Instruct](https://huggingface.co/Qwen/Qwen3-Coder-480B-A35B-Instruct)|
+|355B-A32B|[GLM 4.5](https://huggingface.co/zai-org/GLM-4.5)|
 
-Leaderboards for coding can be seen in the [EvalPlus Leaderboard](https://evalplus.github.io/leaderboard.html), [Bigcode Models Leaderboard](https://huggingface.co/spaces/bigcode/bigcode-models-leaderboard), and [Can AI Code Results](https://huggingface.co/spaces/mike-ravkine/can-ai-code-results).
+
 
 **Math**
 
-[*See ToRA page for more details*](https://github.com/microsoft/ToRA)
+For complex math problems, thinking models capable of tool use excel. Below are some of the best thinking models available:
 
-|7B|[ToRA Code 7B v1.0](https://huggingface.co/llm-agents/tora-code-7b-v1.0)|
+|4B|[Qwen3 4B Thinking](https://huggingface.co/Qwen/Qwen3-4B-Thinking-2507)|
 |:-:|:-:|
-|13B|[ToRA Code 13B v1.0](https://huggingface.co/llm-agents/tora-code-13b-v1.0)|
-|34B|[ToRA Code 34B v1.0](https://huggingface.co/llm-agents/tora-code-34b-v1.0)|
-|70B|[ToRA 70B v1.0](https://huggingface.co/llm-agents/tora-70b-v1.0)|
+|30B-A3B|[Qwen3 30B A3B Thinking](https://huggingface.co/Qwen/Qwen3-30B-A3B-Thinking-2507)|
+|20B-A3.6B|[GPT OSS 20B](https://huggingface.co/llm-agents/tora-code-13b-v1.0)|
 
 **Medical**
 
-[*See Clinical Camel paper for more details*](https://arxiv.org/abs/2305.12031)
-
-|7B|[MedAlpaca 7B](https://huggingface.co/medalpaca/medalpaca-7b)|
+|8B|[II Medical 8B 1706](https://huggingface.co/Intelligent-Internet/II-Medical-8B-1706)|
 |:-:|:-:|
-|13B|[qCammel-13](https://huggingface.co/augtoma/qCammel-13) or [MedAlpaca 13B](https://huggingface.co/medalpaca/medalpaca-13b)|
-|70B|[Clinical Camel 70B](https://huggingface.co/wanglab/ClinicalCamel-70B)|
+|27B|[MedGemma 27B](https://huggingface.co/google/medgemma-27b-it)
 
-**Visual Instruction**
+MedGemma 27B can additionally perform visual question answering.
 
-LLaVA^(*)
-
-[*See LLaVA page for more details*](https://github.com/haotian-liu/LLaVA)
-
-|7B|[LLaVA v1.5 7B](https://huggingface.co/liuhaotian/llava-v1.5-7b)|
-|:-:|:-:|
-|13B|[LLaVA v1.5 13B](https://huggingface.co/liuhaotian/llava-v1.5-13b)|
-
-^(*LLaVA is supported in text generation web UI as an extension and llama.cpp)
-
-Qwen VL
-
-[*See Qwen VL page for more details*](https://github.com/QwenLM/Qwen-VL)
-
-|7B|[Qwen VL 7B](https://huggingface.co/Qwen/Qwen-VL)|
-|:-:|:-:|
-|7B|[Qwen VL Chat 7B](https://huggingface.co/Qwen/Qwen-VL-Chat)|
-
-InstructBLIP^(*)
-
-[*See InstructBLIP page for more details*](https://github.com/salesforce/LAVIS/blob/main/projects/instructblip/README.md)
-
-^(*InstructBLIP uses Vicuna 7B and 13B models.)
-
-IDEFICS^(*)
-
-[*See IDEFICS blog for more details*](https://huggingface.co/blog/idefics)
-
-|9B|[IDEFICS 9B Instruct](https://huggingface.co/HuggingFaceM4/idefics-9b-instruct)|
-|:-:|:-:|
-|80B|[IDEFICS 80B Instruct](https://huggingface.co/HuggingFaceM4/idefics-80b-instruct)|
-
-^(*Based off of Llama 1 7B and 65B)
-
-#### Base models
-
-**Llama**
-
-These are the download links to the base models for Llama 1, Llama 2, and Code Llama.
-
-|[Llama 1 7B](https://huggingface.co/huggyllama/llama-7b)|[Llama 2 7B](https://huggingface.co/NousResearch/Llama-2-7b-hf)|[Code Llama 7B](https://huggingface.co/codellama/CodeLlama-7b-hf)|
-|:-:|:-:|:-:|
-|[Llama 1 13B](https://huggingface.co/huggyllama/llama-13b)|[Llama 2 13B](https://huggingface.co/NousResearch/Llama-2-13b-hf)|[Code Llama 13B](https://huggingface.co/codellama/CodeLlama-13b-hf)|
-|[Llama 1 33B](https://huggingface.co/huggyllama/llama-30b)|[Llama 2 70B](https://huggingface.co/NousResearch/Llama-2-70b-hf)|[Code Llama 34B](https://huggingface.co/codellama/CodeLlama-34b-hf)|
-|[Llama 1 65B](https://huggingface.co/huggyllama/llama-65b)|||
-
-**Other**
-
-Download links to other base models.
-
-|**Aquila**|**ChatGLM**|**Falcon**|**Mistral**|**Qwen**|**Yi**|
-|:-|:-|:-|:-|:-|:-|
-|[Aquila2 7B](https://huggingface.co/BAAI/Aquila2-7B)|[ChatGLM3 6B Base](https://huggingface.co/THUDM/chatglm3-6b-base)|[Falcon 7B](https://huggingface.co/tiiuae/falcon-7b)|[Mistral 7B v0.1](https://huggingface.co/mistralai/Mistral-7B-v0.1)|[Qwen 7B](https://huggingface.co/Qwen/Qwen-7B)|[Yi 6B](https://huggingface.co/01-ai/Yi-6B)|
-|[Aquila2 34B](https://huggingface.co/BAAI/Aquila2-34B)||[Falcon 40B](https://huggingface.co/tiiuae/falcon-40b)||[Qwen 14B](https://huggingface.co/Qwen/Qwen-14B)|[Yi 34B](https://huggingface.co/01-ai/Yi-34B)|
-|||[Falcon 180B](https://huggingface.co/tiiuae/falcon-180B)||||
-
-#### Prompt format
-
-For best results, ensure that you are using the correct prompt format for the model. This is normally listed on the model card. For llama.cpp, [read the docs on interaction](https://github.com/ggerganov/llama.cpp/blob/master/examples/main/README.md#interaction). For KoboldCpp, read [this wiki entry](https://github.com/LostRuins/koboldcpp/wiki#instruct---start-and-end-sequence). For text generation web UI, read the entries on [instruction-following models](https://github.com/oobabooga/text-generation-webui/wiki/01-%E2%80%90-Chat-Tab#instruction-following-models) and [instruct template](https://github.com/oobabooga/text-generation-webui/wiki/01-%E2%80%90-Chat-Tab#instruct).
-
-This passage from the text generation web UI wiki briefly summarizes the importance of prompt formats:
-
-> It is important to emphasize that instruction-following models **have to be used with the exact prompt format that they were trained on.** Using those models with any other prompt format should be considered undefined behavior. The model will still generate replies, but they will be less accurate to your inputs.
-
-This section lists some common prompt formats. If you don't know what format to use and it's not listed on the model card, use Alpaca. In the following examples, the asterisks should not be included.
-
-**Alpaca^(*)**
-
-    Below is an instruction that describes a task. Write a response that appropriately completes the request.
-
-    ### Instruction:
-    *your text here*
-
-    ### Response:
-
-^(*This full prompt is for the original Alpaca model. Some models require only the ### Instruction and ### Response lines.)
-
-**Alpaca with Input**
-
-    Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.
-
-    ### Instruction:
-    *your text here*
-
-    ### Input:
-    *your text here*
-
-    ### Response:
-
-**ChatML**
-
-    <|im_start|>system
-    *your system text here*<|im_end|>
-    <|im_start|>user
-    *your text here*<|im_end|>
-    <|im_start|>assistant
-
-**Llama 2 Chat and Code Llama Instruct**
-
-[*See this guide for the most accurate details on the prompt format*](https://www.reddit.com/r/LocalLLaMA/comments/155po2p/get_llama_2_prompt_format_right/)
-
-    [INST] <<SYS>>
-    *your system text here*
-    <</SYS>>
-
-    *your text here* [/INST]
-
-**Vicuna v1.1-v1.5**
-
-    A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions.
-
-    USER: *your text here*
-    ASSISTANT:
-
----
 
 ## Subreddit flair
 
