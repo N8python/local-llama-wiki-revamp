@@ -26,7 +26,7 @@ A short collection of very frequently asked questions in this subreddit about Lo
 
 **Q:** Are Local LLMs as good as ChatGPT, Claude, etc.?
 
-**A:** It depends. The largest open-source LLMs presently match or surpass frontier models in many benchmarks. However, these LLMs typically aren't practical to run on most consumer hardware, and the smaller local LLMs that can be run on consumer hardware are generally not as capable as frontier models. See [here](https://artificialanalysis.ai/models?model-filters=non-reasoning-models%2Creasoning-models#artificial-analysis-intelligence-index-by-open-weights-vs-proprietary) for a comparison of state-of-the-art open-weight models vs proprietary models.
+**A:** It depends. The largest open-source LLMs presently rival frontier models in many benchmarks. However, these LLMs typically aren't practical to run on most consumer hardware, and the smaller local LLMs that can be run on consumer hardware are generally not as capable as frontier models. See [here](https://artificialanalysis.ai/models?model-filters=non-reasoning-models%2Creasoning-models#artificial-analysis-intelligence-index-by-open-weights-vs-proprietary) for a comparison of state-of-the-art open-weight models vs proprietary models.
 
 **Q:** Can local LLMs models be used commercially?
 
@@ -68,31 +68,41 @@ For research revolving around LLMs in general, [you can search arXiv](https://ar
 
 ### Community
 
-Since the unveil of Llama in February 2023, thorough documentation has been created across community projects and making use of the Llama ecosystem is easier than before. There are several main projects that are used to fulfill a variety of needs. Visit each page for more information.
+A wide variety of community resources are available to run local LLMs:
+
+---
+
+[**llama.cpp**](https://github.com/ggml-org/llama.cpp/tree/master)
+
+> Runtime for a wide variety of Local LLMs in C/C++, supports CUDA and Metal acceleration, and can run on CPU-only systems as well.
+
+[Usage](https://github.com/ggml-org/llama.cpp/tree/master) - See the "Quick Start" section.
+
+---
+
+[**LMStudio**](https://lmstudio.ai/)
+
+> An easy-to-use desktop application to run local LLMs, with a polished interface and many features.
+
+---
+
+[**mlx-lm**](https://github.com/ml-explore/mlx-lm)
+
+> The premier framework for running and fine-tuning local LLMs on Apple Silicon.
+
+[Usage](https://github.com/ml-explore/mlx-lm/blob/main/README.md)
 
 ---
 
 [**Text generation web UI**](https://github.com/oobabooga/text-generation-webui)
 
-A Gradio web UI for large language models. The ideal option if you're used to Stable Diffusion web UI and want a similar interface. 
+> A Gradio web UI for large language models. The ideal option if you're used to Stable Diffusion web UI and want a similar interface. 
 
-Multiple model backends: transformers, llama.cpp, ExLlama, ExLlamaV2, AutoGPTQ, GPTQ-for-LLaMa, CTransformers, AutoAWQ
+> Multiple model backends: transformers, llama.cpp, ExLlama, ExLlamaV2, AutoGPTQ, GPTQ-for-LLaMa, CTransformers, AutoAWQ
 
-[Installation](https://github.com/oobabooga/text-generation-webui#installation)
+[Installation](https://github.com/oobabooga/text-generation-webui), go to "How to install" section
 
 [Full documentation](https://github.com/oobabooga/text-generation-webui/wiki)
-
----
-
-[**llama.cpp**](https://github.com/ggerganov/llama.cpp)
-
-> Port of Facebook's LLaMA model in C/C++
-
-[Usage](https://github.com/ggerganov/llama.cpp#usage)
-
-[Running on Windows with prebuilt binaries](https://github.com/ggerganov/llama.cpp#running-on-windows-with-prebuilt-binaries)
-
-[Additional documentation](https://github.com/ggerganov/llama.cpp/blob/master/examples/main/README.md)
 
 ---
 
@@ -130,17 +140,9 @@ Multiple model backends: transformers, llama.cpp, ExLlama, ExLlamaV2, AutoGPTQ, 
 
 #### Extra
 
-[**FastChat**](https://github.com/lm-sys/FastChat)
-
-> An open platform for training, serving, and evaluating large language model based chatbots
-
 [**PEFT**](https://github.com/huggingface/peft)
 
 > State-of-the-art Parameter-Efficient Fine-Tuning
-
-[**QLoRA**](https://github.com/artidoro/qlora)
-
-> Efficient Finetuning of Quantized LLMs
 
 ---
 
