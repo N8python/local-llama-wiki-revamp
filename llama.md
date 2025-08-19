@@ -20,6 +20,7 @@ If you have any suggestions for additions to this page, you can [send a message 
 
 A short collection of very frequently asked questions in this subreddit about Local LLMs.
 
+
 **Q:** What are Local LLMs?
 
 **A:** Large language models are the foundation of AI chatbots like ChatGPT, Claude, or Gemini. Local LLMs are large language models that are open-source, and therefore can be theoretically run on your own hardware without needing to connect to an external API. They vary greatly in size, quality, and hardware requirements.
@@ -34,15 +35,15 @@ A short collection of very frequently asked questions in this subreddit about Lo
 
 **Q:** Can I try local LLMs online?
 
-**A:** It varies! [Qwen](https://chat.qwen.ai/), [Deepseek](https://chat.deepseek.com/), and many more have chat interfaces available online. However, these often feature frontier models, and smaller models that you may be interested in running locally may not have online demos available. HuggingFace [inference endpoints](https://endpoints.huggingface.co/) provide a pay-as-you-go option to try out any model on Hugging Face - though at this point, downloading the model may simply be easier.
+**A:** It varies! [Qwen](https://chat.qwen.ai/), [Deepseek](https://chat.deepseek.com/), and many more have chat interfaces available online. However, these often feature frontier models, and smaller models that you may be interested in running locally may not have online demos available. to lower-end GPUs, which can be used for quick testing of small LLMs. Finally, HuggingFace [inference endpoints](https://endpoints.huggingface.co/) provide a pay-as-you-go option to try out any model on Hugging Face - though at this point, downloading the model may simply be easier. Google Colab and Kaggle also offer free access 
 
 **Q:** Can my PC run Local LLMs?
 
-**A:** All PCs can run *some* size of large language models. Since 4-bit quantization is considered a good starting point for efficient local deployment, a simple formula for the LLM size your computer could run comfortably is (**RAM** * 1.5) billion parameters. With 8GB RAM, you can run 12B models comfortably (such as Mistral Nemo). w/ 16GB, you can push 24B (such as Mistral Small 3). 
+**A:** See the *What's Right For Your Hardware* section below. This is a very common question, and resources are attached below.
 
-However, this doesn't take into account advanced techniques such as offloading layers from the GPU to CPU, which can allow larger models to be run on less powerful hardware at surprising speeds. 
+**Q:** I tired an LLM and it produced a weird result. Should I make a post about it?
 
-Additionally, Apple Silicon chips have unified memory, which changes the calculation - only 75% of the unified memory is available for the GPU by default, so the rule of thumb becomes (**RAM** * 1.125).
+**A:** First, check the *Common Pitfalls* section below. If your issue is distinct from those, then yes, you can make a post about it. 
 
 **Q:** What is the easiest way to get started?
 
@@ -60,9 +61,47 @@ Additionally, Apple Silicon chips have unified memory, which changes the calcula
 
 **A:** For Llama, the official news source is the [Meta AI blog](https://ai.meta.com/blog/), and any news there will be posted here. For Qwen, the official news source is the [Qwen blog](https://qwenlm.github.io/blog/). For Mistral, the official news source is the [Mistral blog](https://mistral.ai/news). Other labs may have their own blogs as well. 
 
+For unofficial updates, high signal blogs recommended by the community include [Simon Willison's Blog](https://simonwillison.net/) and [Interconnects AI](https://www.interconnects.ai/).
+
 For research revolving around LLMs in general, [you can search arXiv](https://arxiv.org/list/cs.CL/recent) on the subjects of Computation and Language, Artificial Intelligence, and Machine Learning. Notable papers and new projects are usually posted in this subreddit.
 
 ---
+
+## What's Right For Your Hardware
+
+All PCs can run *some* size of large language model. In order to run an LLM, both the weights of the model and the KV cache (stored activations from previous tokens) must fit into RAM. The model can be either inferenced on the CPU, which lets it use all system RAM, or on the GPU, which is much faster but limited to the VRAM of the GPU. 
+
+Because models are so RAM-hungry, quantization is often used to reduce the size of the model in RAM. The default precision of each weight of the model is usually 16 bits, but quantization can reduce this drastically. 8-bit quantization is essentially lossless, while 4-bit quantization offers a good tradeoff between size and quality. More aggressive quantizations such as 3-bit and 2-bit are available, but these can degrade model quality significantly.
+
+The simple formula for how much space a model's parameters takes up in RAM is:
+
+**RAM = Model Size in Parameters * (bits per weight / 8)**
+
+The KV cache is a bit more complicated, as it relies on the internal activations generated by the key and value heads within the model. However, what is simple to understand is that the KV cache grows linearly with the amount of tokens stored in context - so twice the tokens means twice the RAM used. This means short contexts might barely be noticeable, but extremely long contexts can sometimes exceed the size of the model itself. To reduce the memory burden, the KV cache can be quantized as well - often to 8 bits, rarely to 4.
+
+Since the above is quite involved, a simple estimate can be employed: the maximum LLM size your computer could run comfortably at 4-bit quantization is (**GB of RAM** * 1.5) billion parameters. With 8GB RAM, you can run 12B models comfortably (such as Mistral Nemo). With 16GB, you can push 24B (such as Mistral Small 3). 
+
+However, this doesn't take into account advanced techniques such as offloading layers from the GPU to CPU, which can allow larger models to be run on less powerful hardware at surprising speeds.  Additionally, Apple Silicon chips have unified memory, which changes the calculation - only 75% of the unified memory is available for the GPU by default (though this can be changed via a [terminal command](https://www.reddit.com/r/LocalLLaMA/comments/186phti/m1m2m3_increase_vram_allocation_with_sudo_sysctl/)).
+
+If one wishes to take into account all these contingencies and techniques, the best way to estimate the size of LLMs your hardware can run is to use an online RAM calculator - these tools take into account your hardware, model size, and quantization scheme. An extremely solid option is:
+
+https://apxml.com/tools/vram-calculator
+
+And a simpler one is:
+
+https://smcleod.net/vram-estimator/
+
+It is recommended to consult the resources above before posting to the subreddit asking if your hardware can run a specific model.
+
+## Common Pitfalls
+
+If you run into issues, check the following common pitfalls first:
+
+**Early Release Bugs:** Often, when a new model is released, the LLM runtimes (such as llama.cpp) may not support it yet, or initial support may be bugged. Issues w/, say, a GGUF file producing strange output one day after a new model released are often due to this. The solution is to wait a few days for the runtimes to catch up, or check the runtime's GitHub issues page to see if others are having the same problem. If posting to this subreddit, focus on the fact the implementation may be bugged, rather than the model itself. Ideally, check against a gold-reference standard - the official Hugging Face inference endpoint for the model, or an online demo if available.
+
+**Wrong Decoding Settings:** LLMs are prone to infinite loops at low temperatures and strange nonsense at high ones. Abnormally high repetition penalties can decrease intelligence. Therefore, make sure you inference your LLM at its recommended settings - which are often provided in the model card on Hugging Face. If no settings are available, an initial temperature of 0.8, top_k of 40, repetition penalty of 1.1, min_p of 0.05, and top_p of 0.95 is a good starting point (These settings are LMStudio's defaults). Don't post problematic generations to the subreddit without first checking if your decoding settings are correct.
+
+**Chat Template Issues:** All instruction-tuned models have chat templates. These chat templates are, by default, encoded using jinja2, a templating engine. They are then processed by the LLM runtime behind-the-scenes to produce the final prompt. However, various things can go wrong. One may have an outdated chat template or an improperly formatted one. This is especially common with tool-calling LLMs. Other times, one may be interfacing with the LLM runtime in such a way that the chat template is not applied at all, and the raw prompt is sent to the model. Either way, the best way to alleviate this issue is to navigate to the model's Hugging Face page, and directly extract the chat template from the "tokenizer_config.json" file, where it will be available under the "chat_template" key. If you try all these things and the issues remain, the chat template is likely not responsible.
 
 ## Resources
 
