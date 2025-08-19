@@ -38,7 +38,7 @@ A short collection of very frequently asked questions in this subreddit about Lo
 
 **Q:** Can my PC run Local LLMs?
 
-**A:** All PCs can run *some* size of large language models. Since 4-bit quantization is the standard for efficient local deployment, a simple formula for the LLM size your computer could run comfortably is (**RAM** * 1.5) billion parameters. With 8GB RAM, you can run 12B models comfortably (such as Mistral Nemo). w/ 16GB, you can push 24B (such as Mistral Small 3). 
+**A:** All PCs can run *some* size of large language models. Since 4-bit quantization is considered a good starting point for efficient local deployment, a simple formula for the LLM size your computer could run comfortably is (**RAM** * 1.5) billion parameters. With 8GB RAM, you can run 12B models comfortably (such as Mistral Nemo). w/ 16GB, you can push 24B (such as Mistral Small 3). 
 
 However, this doesn't take into account advanced techniques such as offloading layers from the GPU to CPU, which can allow larger models to be run on less powerful hardware at surprising speeds. 
 
@@ -50,7 +50,7 @@ Additionally, Apple Silicon chips have unified memory, which changes the calcula
 
 **Q:** What is the best model to use?
 
-**A:** There's no single answer to this question. As of now, however, a safe bet for the 'best' model in any given size class is the most recently updated Qwen model of that size - [Qwen3 4B](Qwen/Qwen3-4B-Instruct-2507) for around 8GB RAM, and [Qwen3 30B-A3B](Qwen/Qwen3-30B-A3B-Instruct-2507) for around 24GB RAM. However, the frontier of LLM performance is constantly shifting, and new models are being released frequently. One can look at the trending recent models [here](https://huggingface.co/?activityType=all&feedType=following&trending=model), and examine model cards to see which models are best suited for their needs. 
+**A:** There's no single answer to this question. As of now, however, a safe bet for the 'best' model in any given size class is the most recently updated Qwen model of that size - [Qwen3 4B](https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507) for around 8GB RAM, and [Qwen3 30B-A3B](https://huggingface.co/Qwen/Qwen3-30B-A3B-Instruct-2507) for around 24GB RAM. However, the frontier of LLM performance is constantly shifting, and new models are being released frequently. One can look at the trending recent models [here](https://huggingface.co/?activityType=all&feedType=following&trending=model), and examine model cards to see which models are best suited for their needs. 
 
 **Q:** Where can I find other guides involving local LLMs?
 
